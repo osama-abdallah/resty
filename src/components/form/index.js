@@ -1,20 +1,51 @@
+import axios from 'axios';
 import React from 'react';
-
+import { useState } from "react";
 import './form.scss';
 
 function Form(props){
-function  handleSubmit (e) {
+
+  const [url , setURL]=useState()
+  const [method , setMethod] = useState()
+  const [reqBody , setReqBody] = useState()
+
+   function getMethod(e){
+    setMethod(e.target.value)
+     
+}
+   function getURL(e){
+  setURL(e.target.value)
+
+}
+  
+   function getReqBody(e){
+    setReqBody(e.target.value)
+   }
+
+  async function  handleSubmit (e) {
     e.preventDefault();
-    const formData = {
-      method:'GET',
-      url: 'https://pokeapi.co/api/v2/pokemon',
-    };
-    props.handleApiCall(formData);
-  }
+console.log(method)
+    let methodURLObject = {
+      method:method ,
+      url:url
+    }
+
+
+if (method === 'post' || method === 'put'){
+   const resultData = await axios[method](url,reqBody)
+   props.handleApiCall(resultData.data,methodURLObject)
+}
+else {
+  const resultData = await axios[method](url)
+  console.log(resultData)
+  props.handleApiCall(resultData.data,methodURLObject)
+
+}
+}
 
     return (
       <>
-        <form onSubmit={handleSubmit}>
+        {/* <form onSubmit={handleSubmit}>
           <label >
             <span>URL: </span>
             <input name='url' type='text' />
@@ -25,6 +56,26 @@ function  handleSubmit (e) {
             <span id="post">POST</span>
             <span id="put">PUT</span>
             <span id="delete">DELETE</span>
+          </label>
+        </form> */}
+
+<form onSubmit={handleSubmit}>
+          <label >
+            <span>URL: </span>
+            <input name='url' type='text' onChange={getURL}/>
+            <button type="submit" data-testid="update-method">GO!</button>
+          </label>
+          <label className="methods"  >
+
+          <select data-testid="select" id="select" name="select" onClick={getMethod}>
+            <option value="get"  >GET</option>
+            <option value="post" >POST</option>
+            <option value="put" >PUT</option>
+            <option value="delete"  >DELETE</option>
+</select>
+<br></br>
+        <textarea id="text" name="text" onChange={getReqBody}></textarea>
+
           </label>
         </form>
       </>

@@ -17,22 +17,28 @@ class App extends React.Component {
     };
   }
 
-  callApi = (requestParams) => {
-    const data = {
-      count: 2,
-      results: [
-        {name: 'fake thing 1', url: 'http://fakethings.com/1'},
-        {name: 'fake thing 2', url: 'http://fakethings.com/2'},
-      ],
-    };
-    this.setState({data, requestParams});
+  callApi = (data,formInputs) => {
+    // mock output
+    // const data = {
+    //   count: 2,
+    //   results: [
+    //     {name: 'fake thing 1', url: 'http://fakethings.com/1'},
+    //     {name: 'fake thing 2', url: 'http://fakethings.com/2'},
+    //   ],
+    // };
+
+    this.setState({
+      data:data,
+      requestParams:formInputs
+    })
+    
   }
 
   render() {
     return (
       <React.Fragment>
         <Header />
-        <div>Request Method: {this.state.requestParams.method}</div>
+        <div data-testid="request">Request Method: {this.state.requestParams.method}</div>
         <div>URL: {this.state.requestParams.url}</div>
         <Form handleApiCall={this.callApi} />
         <Results data={this.state.data} />

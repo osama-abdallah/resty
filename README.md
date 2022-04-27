@@ -5,7 +5,11 @@
 
 npm start 
 
+## URL to Test
+
+https://jsonplaceholder.typicode.com/posts
+
 
 ## Uml 
 
-![image](./Assets/lab26.png)
+![image](./Assets/lab27.png)
