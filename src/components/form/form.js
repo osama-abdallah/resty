@@ -6,7 +6,7 @@ import './form.scss';
 function Form(props){
 
   const [url , setURL]=useState()
-  const [method , setMethod] = useState()
+  const [method , setMethod] = useState("get")
   const [reqBody , setReqBody] = useState()
 
    function getMethod(e){
@@ -20,6 +20,7 @@ function Form(props){
   
    function getReqBody(e){
     setReqBody(e.target.value)
+    console.log(reqBody);
    }
 
   async function  handleSubmit (e) {
@@ -31,16 +32,18 @@ console.log(method)
     }
 
 
+props.setLoading(true)
 if (method === 'post' || method === 'put'){
    const resultData = await axios[method](url,reqBody)
-   props.handleApiCall(resultData.data,methodURLObject)
+   props.handleApiCall(resultData.data,methodURLObject,resultData.headers)
 }
 else {
   const resultData = await axios[method](url)
   console.log(resultData)
-  props.handleApiCall(resultData.data,methodURLObject)
+  props.handleApiCall(resultData.data,methodURLObject,resultData.headers)
 
 }
+props.setLoading(false)
 }
 
     return (
