@@ -16,4 +16,4 @@ https://jsonplaceholder.typicode.com/posts
 
 ## Uml 
 
-![image](./Assets/lab27.png)
+![image](./Assets/lab28.png)
