@@ -2,7 +2,7 @@ import axios from 'axios';
 import React from 'react';
 import { useState } from "react";
 import './form.scss';
-
+import {addHistory} from "../../Reducer"
 function Form(props){
 
   const [url , setURL]=useState()
@@ -48,20 +48,6 @@ props.setLoading(false)
 
     return (
       <>
-        {/* <form onSubmit={handleSubmit}>
-          <label >
-            <span>URL: </span>
-            <input name='url' type='text' />
-            <button type="submit">GO!</button>
-          </label>
-          <label className="methods">
-            <span id="get">GET</span>
-            <span id="post">POST</span>
-            <span id="put">PUT</span>
-            <span id="delete">DELETE</span>
-          </label>
-        </form> */}
-
 <form onSubmit={handleSubmit}>
           <label >
             <span>URL: </span>
