@@ -2,7 +2,7 @@ import axios from 'axios';
 import React from 'react';
 import { useState } from "react";
 import './form.scss';
-import {addHistory} from "../../Reducer"
+
 function Form(props){
 
   const [url , setURL]=useState()
@@ -30,7 +30,7 @@ console.log(method)
       method:method ,
       url:url
     }
-
+console.log(methodURLObject);
 
 props.setLoading(true)
 if (method === 'post' || method === 'put'){

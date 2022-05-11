@@ -9,27 +9,29 @@ import {useState} from 'react'
 import HistoryReducer,{addHistory} from "./Reducer";
 import {useReducer} from 'react'
 
-const initialState = {methodUrl:[], historyResults:[]};
+const initialState = {methodUrl:[], historyResults:[], historyHeaders:[]};
 
 function App () {
 
 const [data,setData]= useState()
-const [reqParams,setReqParams]= useState({})
+const [reqParams,setReqParams]= useState()
 const [loading,setLoading]= useState(false)
 const [headers,setHeaders] = useState()
 const [state,dispatch]=useReducer(HistoryReducer,initialState)
 
-const [click,setHistory]=useState()
 function handleClick(e) { 
   e.preventDefault();
-  setHistory(e.target.innerText)
+  const click = e.target.innerText
+  console.log(click);
   let arr = click.split(' ')
   let method = arr[1]
   let url= arr[0]
   for (let i = 0; i < state.methodUrl.length; i++) {
-    if (method == state.methodUrl[i].method && url == state.methodUrl[i].url) {
+    if (method === state.methodUrl[i].method && url === state.methodUrl[i].url) {
     
     setData(state.historyResults[i])
+    setHeaders(state.historyHeaders[i])
+    setReqParams({method,url})
     console.log(data);
     }
     
@@ -40,17 +42,23 @@ console.log(click);
   const callApi = (data,formInputs,header) => {
  setHeaders(header)
  setData(data)
- setReqParams(formInputs)  
- dispatch(addHistory({data:data,header:header,reqParams:reqParams})) 
+ setReqParams(formInputs)
+ console.log(formInputs);
+ console.log(reqParams);
+ console.log(headers);
+ console.log(data);  
+ dispatch(addHistory({data:data,header:header,reqParams:formInputs})) 
   }
+// useEffect(()=>{
 
+// },[data])
   return (
       <>
         <Header />
-        <div data-testid="request">Request Method: {reqParams.method || ''}</div>
-        <div>URL: {reqParams.url || ''}</div>
+        <div data-testid="request">Request Method: {reqParams && (reqParams.method || '')}</div>
+        <div>URL: {reqParams && (reqParams.url || '')}</div>
         <Form handleApiCall={callApi} setLoading={setLoading} dispatch={dispatch}/>
-        <Results data={data} loading={loading} header= {headers} state={state} handleClick={handleClick}/>
+        {reqParams&&<Results data={data} loading={loading} header= {headers} state={state} handleClick={handleClick}/>}
         <Footer />
       </>
     );

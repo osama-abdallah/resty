@@ -1,5 +1,5 @@
 
-const initialState = {methodUrl:[], historyResults:[] }
+const initialState = {methodUrl:[], historyResults:[] ,historyHeaders:[]}
 
 
 export default function HistoryReducer (state=initialState,action){
@@ -9,8 +9,9 @@ export default function HistoryReducer (state=initialState,action){
         case "addHistory":
             let methodUrl=[...state.methodUrl,payload.reqParams]
             let historyResults=[...state.historyResults,payload.data]
-
-            return{methodUrl,historyResults};
+            let historyHeaders=[...state.historyHeaders,payload.header]
+            
+            return{methodUrl,historyResults, historyHeaders};
     
         default:
             return initialState;
