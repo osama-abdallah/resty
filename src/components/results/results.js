@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+
 import JSONPretty from 'react-json-pretty';
 import 'react-json-pretty/themes/monikai.css';
 
@@ -11,12 +11,12 @@ function Results(props){
 <h2>History</h2>
 <ul>
   {props.state.methodUrl.map((history,index)=>{
-if (history.url) {
-  
-return(<li key={index} onClick={props.handleClick}>
+
+  console.log(index);
+return(<li key={index?index:0} onClick={props.handleClick}>
   {history.url} {history.method}
 </li>)
-}
+
   })
   }
 </ul>
